@@ -1,0 +1,33 @@
+{
+  "name": "hidalgo-rides/intersect-web",
+  "description": "Web layer built to provide easy integration with Intersect libraries.",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [],
+  "authors": [
+    {
+      "name": "Tim Kipp",
+      "email": "timkipp.22.developer@gmail.com"
+    }
+  ],
+  "autoload" : {
+    "psr-4" : {
+      "Intersect\\" : "src/"
+    }
+  },
+  "autoload-dev" : {
+    "psr-4" : {
+      "Tests\\" : "tests/"
+    }
+  },
+  "require": {
+    "hidalgo-rides/intersect-database": "^1.0.0",
+    "hidalgo-rides/intersect-http": "^1.0.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7"
+  },
+    "config": {
+      "discard-changes": true
+    }
+}
