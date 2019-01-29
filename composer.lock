@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1e7a32eb4b09ba42fef754dd3d50cfa5",
+    "content-hash": "b8564d803448eff75f0ed126489d65a0",
     "packages": [
         {
             "name": "hidalgo-rides/intersect-core",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/HidalgoRides/intersect-core.git",
-                "reference": "9eb73078456a402525915ead3357a343ee260467"
+                "reference": "4a54fc1d6001e028a68d39bb6fd0a139a13c5338"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HidalgoRides/intersect-core/zipball/9eb73078456a402525915ead3357a343ee260467",
-                "reference": "9eb73078456a402525915ead3357a343ee260467",
+                "url": "https://api.github.com/repos/HidalgoRides/intersect-core/zipball/4a54fc1d6001e028a68d39bb6fd0a139a13c5338",
+                "reference": "4a54fc1d6001e028a68d39bb6fd0a139a13c5338",
                 "shasum": ""
             },
             "require": {
@@ -43,7 +43,7 @@
                 }
             ],
             "description": "Common classes used throughout Intersect libraries and projects.",
-            "time": "2019-01-27T08:56:40+00:00"
+            "time": "2019-01-29T03:58:53+00:00"
         },
         {
             "name": "hidalgo-rides/intersect-database",
@@ -1047,16 +1047,16 @@
         },
         {
             "name": "sebastian/environment",
-            "version": "4.0.1",
+            "version": "4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "febd209a219cea7b56ad799b30ebbea34b71eb8f"
+                "reference": "4a43e9af57b4afa663077b9bc85255dbc6e8a2bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/febd209a219cea7b56ad799b30ebbea34b71eb8f",
-                "reference": "febd209a219cea7b56ad799b30ebbea34b71eb8f",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/4a43e9af57b4afa663077b9bc85255dbc6e8a2bd",
+                "reference": "4a43e9af57b4afa663077b9bc85255dbc6e8a2bd",
                 "shasum": ""
             },
             "require": {
@@ -1093,7 +1093,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2018-11-25T09:31:21+00:00"
+            "time": "2019-01-28T15:26:03+00:00"
         },
         {
             "name": "sebastian/exporter",

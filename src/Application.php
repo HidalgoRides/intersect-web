@@ -12,6 +12,7 @@ use Intersect\Core\ClosureInvoker;
 use Intersect\Http\RequestHandler;
 use Intersect\Core\Command\Command;
 use Intersect\Database\Model\Model;
+use Intersect\Http\ExceptionHandler;
 use Intersect\Core\ParameterResolver;
 use Intersect\Http\Router\RouteGroup;
 use Intersect\Core\Storage\FileStorage;
@@ -230,7 +231,7 @@ class Application {
 
         $this->registerDefaultResponseHandlers();
 
-        $requestHandler = new RequestHandler($this->container, $this->getRouteRegistry(), $this->closureInvoker, $this->methodInvoker);
+        $requestHandler = new RequestHandler($this->container, $this->getRouteRegistry(), $this->closureInvoker, $this->methodInvoker, $this->getClass(ExceptionHandler::class));
 
         $requestHandler->setPreInvocationCallback(function($controller) use ($request) {
             if ($controller instanceof AbstractController)
