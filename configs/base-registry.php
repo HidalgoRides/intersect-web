@@ -3,24 +3,9 @@
 use \Intersect\Application;
 use Intersect\Core\Storage\FileStorage;
 use Intersect\Database\Connection\Connection;
-use Intersect\Database\Connection\NullConnection;
-use \Intersect\Database\Connection\ConnectionFactory;
-use \Intersect\Database\Connection\ConnectionSettings;
 
 $app = Application::instance();
-
-$databaseConfig = $app->getRegisteredConfigs('database');
-$connection = new NullConnection();
-
-if (!is_null($databaseConfig) && is_array($databaseConfig))
-{
-    if (array_key_exists('host', $databaseConfig) && array_key_exists('username', $databaseConfig) && array_key_exists('password', $databaseConfig) 
-        && array_key_exists('port', $databaseConfig) && array_key_exists('name', $databaseConfig) && array_key_exists('driver', $databaseConfig))
-    {
-        $connectionSettings = new ConnectionSettings($databaseConfig['host'], $databaseConfig['username'], $databaseConfig['password'], $databaseConfig['port'], $databaseConfig['name']);
-        $connection = ConnectionFactory::get($databaseConfig['driver'], $connectionSettings);
-    }
-}
+$connection = $app->getConnection();
 
 return [
     'classes' => [],

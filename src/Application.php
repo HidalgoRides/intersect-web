@@ -19,6 +19,9 @@ use Intersect\Core\Storage\FileStorage;
 use Intersect\Core\Http\ResponseHandler;
 use Intersect\Http\Router\RouteRegistry;
 use Intersect\Database\Connection\Connection;
+use Intersect\Database\Connection\NullConnection;
+use Intersect\Database\Connection\ConnectionFactory;
+use Intersect\Database\Connection\ConnectionSettings;
 use Intersect\Database\Response\ModelResponseHandler;
 use Intersect\Http\Response\Handlers\TwigResponseHandler;
 use Intersect\Http\Response\Handlers\ViewResponseHandler;
@@ -40,6 +43,9 @@ class Application {
 
     /** @var ClosureInvoker */
     private $closureInvoker;
+
+    /** @var Connection */
+    private $connection;
 
     /** @var FileStorage */
     private $fileStorage;
@@ -78,11 +84,7 @@ class Application {
         $this->loadRegistryData();
         $this->loadRouteData();
 
-        $connection = $this->getClass(Connection::class);
-        if (!is_null($connection))
-        {
-            Model::setConnection($connection);
-        }
+        Model::setConnection($this->getConnection());
 
         $this->isInitialized = true;
     }
@@ -142,7 +144,27 @@ class Application {
     }
 
     /**
-     * return AppContainer
+     * @return Connection
+     */
+    public function getConnection()
+    {
+        if (is_null($this->connection))
+        {
+            $databaseConfig = $this->getRegisteredConfigs('database');
+            $this->connection = new NullConnection();
+    
+            if (!is_null($databaseConfig) && is_array($databaseConfig))
+            {
+                $connectionSettings = new ConnectionSettings($databaseConfig['host'], $databaseConfig['username'], $databaseConfig['password'], $databaseConfig['port'], $databaseConfig['name']);
+                $this->connection = ConnectionFactory::get($databaseConfig['driver'], $connectionSettings);
+            }
+        }
+
+        return $this->connection;
+    }
+
+    /**
+     * @return AppContainer
      */
     public function getContainer()
     {
