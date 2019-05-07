@@ -21,13 +21,15 @@
     }
   },
   "require": {
-    "hidalgo-rides/intersect-database": "^1.0",
-    "hidalgo-rides/intersect-http": "^1.0"
+    "hidalgo-rides/intersect-database": "dev-release/1.1.x",
+    "hidalgo-rides/intersect-http": "dev-release/1.1.x"
   },
   "require-dev": {
     "phpunit/phpunit": "^7"
   },
-    "config": {
+  "config": {
       "discard-changes": true
-    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
