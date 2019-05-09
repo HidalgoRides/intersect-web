@@ -4,14 +4,12 @@ namespace Intersect;
 
 use Intersect\Core\Event;
 use Intersect\AppContainer;
-use Intersect\Core\Container;
 use Intersect\Core\Http\Request;
 use Intersect\Http\Router\Route;
 use Intersect\Core\MethodInvoker;
 use Intersect\Core\ClosureInvoker;
 use Intersect\Http\RequestHandler;
 use Intersect\Core\Command\Command;
-use Intersect\Database\Model\Model;
 use Intersect\Http\ExceptionHandler;
 use Intersect\Core\ParameterResolver;
 use Intersect\Http\Router\RouteGroup;
@@ -27,6 +25,7 @@ use Intersect\Http\Response\Handlers\TwigResponseHandler;
 use Intersect\Http\Response\Handlers\ViewResponseHandler;
 use Intersect\Http\Response\Handlers\ArrayResponseHandler;
 use Intersect\Http\Response\Handlers\StringResponseHandler;
+use Intersect\Database\Connection\ConnectionRepository;
 
 class Application {
 
@@ -43,9 +42,6 @@ class Application {
 
     /** @var ClosureInvoker */
     private $closureInvoker;
-
-    /** @var Connection */
-    private $connection;
 
     /** @var FileStorage */
     private $fileStorage;
@@ -78,13 +74,13 @@ class Application {
         $this->fileStorage = new FileStorage();
 
         $this->loadConfiguration('base-config.php', 'config.php');
+        $this->registerConnections();
+
         $this->loadConfiguration('base-registry.php', 'registry.php', 'registry');
         $this->loadConfiguration('base-routes.php', 'routes.php', 'routes');
 
         $this->loadRegistryData();
         $this->loadRouteData();
-
-        Model::setConnection($this->getConnection());
 
         $this->isInitialized = true;
     }
@@ -146,21 +142,11 @@ class Application {
     /**
      * @return Connection
      */
-    public function getConnection()
+    public function getConnection($key = 'default')
     {
-        if (is_null($this->connection))
-        {
-            $databaseConfig = $this->getRegisteredConfigs('database');
-            $this->connection = new NullConnection();
-    
-            if (!is_null($databaseConfig) && is_array($databaseConfig))
-            {
-                $connectionSettings = new ConnectionSettings($databaseConfig['host'], $databaseConfig['username'], $databaseConfig['password'], $databaseConfig['port'], $databaseConfig['name']);
-                $this->connection = ConnectionFactory::get($databaseConfig['driver'], $connectionSettings);
-            }
-        }
+        $connection = ConnectionRepository::get($key);
 
-        return $this->connection;
+        return (!is_null($connection) ? $connection : new NullConnection());
     }
 
     /**
@@ -309,6 +295,18 @@ class Application {
         $this->basePath = rtrim($basePath, '/');
     }
 
+    private function getConnectionFromConfiguration($configs)
+    {
+        $connectionSettings = ConnectionSettings::builder($configs['host'], $configs['username'], $configs['password'])
+            ->port($configs['port'])
+            ->database($configs['name'])
+            ->schema($configs['schema'])
+            ->charset($configs['charset'])
+            ->build();
+
+        return ConnectionFactory::get($configs['driver'], $connectionSettings);
+    }
+
     private function loadConfiguration($baseFileName, $clientFileName, $rootPrefix = null)
     {
         // load base application configurations
@@ -409,6 +407,26 @@ class Application {
             }
 
             $this->container->getConfigRegistry()->register($configData);
+        }
+    }
+
+    private function registerConnections()
+    {
+        $configs = $this->getRegisteredConfigs('database');
+        if (is_null($configs) || !is_array($configs))
+        {
+            return;
+        }
+
+        foreach ($configs as $key => $configData)
+        {
+            if (!is_array($configData))
+            {
+                ConnectionRepository::register('default', $this->getConnectionFromConfiguration($configs));
+                break;
+            }
+            
+            ConnectionRepository::register($key, $this->getConnectionFromConfiguration($configData));
         }
     }
 

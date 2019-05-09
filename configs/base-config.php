@@ -2,12 +2,16 @@
 
 return [
     'database' => [
-        'driver' => 'mysql',
-        'host' => 'db',
-        'username' => 'root',
-        'password' => 'password',
-        'port' => '3306',
-        'name' => 'app'
+        'default' => [
+            'driver' => 'mysql',
+            'host' => 'db',
+            'username' => 'root',
+            'password' => 'password',
+            'port' => '3306',
+            'name' => 'app',
+            'schema' => null,
+            'charset' => 'utf8'
+        ]
     ],
     'paths' => [
         'cache' => '/cache',
