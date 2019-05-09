@@ -297,14 +297,27 @@ class Application {
 
     private function getConnectionFromConfiguration($configs)
     {
-        $connectionSettings = ConnectionSettings::builder($configs['host'], $configs['username'], $configs['password'])
-            ->port($configs['port'])
-            ->database($configs['name'])
-            ->schema($configs['schema'])
-            ->charset($configs['charset'])
+        $host = $this->getValue('host', $configs);
+        $username = $this->getValue('username', $configs);
+        $password = $this->getValue('password', $configs);
+        $database = $this->getValue('name', $configs);
+        $port = $this->getValue('port', $configs);
+        $schema = $this->getValue('schema', $configs);
+        $charset = $this->getValue('charset', $configs, 'utf8');
+
+        $connectionSettings = ConnectionSettings::builder($host, $username, $password)
+            ->port($port)
+            ->database($database)
+            ->schema($schema)
+            ->charset($charset)
             ->build();
 
         return ConnectionFactory::get($configs['driver'], $connectionSettings);
+    }
+
+    private function getValue($key, array $data, $defaultValue = null)
+    {
+        return (array_key_exists($key, $data) ? $data[$key] : (!is_null($defaultValue) ? $defaultValue : null));
     }
 
     private function loadConfiguration($baseFileName, $clientFileName, $rootPrefix = null)
