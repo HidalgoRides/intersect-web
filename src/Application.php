@@ -440,7 +440,7 @@ class Application {
         // support old connection configuration
         if (!array_key_exists('connections', $configs))
         {
-            ConnectionRepository::register('default', $this->getConnectionFromConfiguration($configs));
+            ConnectionRepository::register($this->getConnectionFromConfiguration($configs));
             return;
         }
 
@@ -448,7 +448,7 @@ class Application {
 
         foreach ($connections as $key => $configData)
         {
-            ConnectionRepository::register($key, $this->getConnectionFromConfiguration($configData));
+            ConnectionRepository::register($this->getConnectionFromConfiguration($configData), $key);
         }
 
         if (array_key_exists('aliases', $configs) && is_array($configs['aliases']))
