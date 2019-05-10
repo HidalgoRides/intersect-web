@@ -426,20 +426,39 @@ class Application {
     private function registerConnections()
     {
         $configs = $this->getRegisteredConfigs('database');
-        if (is_null($configs) || !is_array($configs))
+
+        if (is_null($configs))
+        {
+            return;
+        }
+        
+        if (!is_array($configs) || count($configs) == 0)
         {
             return;
         }
 
-        foreach ($configs as $key => $configData)
+        // support old connection configuration
+        if (!array_key_exists('connections', $configs))
         {
-            if (!is_array($configData))
-            {
-                ConnectionRepository::register('default', $this->getConnectionFromConfiguration($configs));
-                break;
-            }
-            
+            ConnectionRepository::register('default', $this->getConnectionFromConfiguration($configs));
+            return;
+        }
+
+        $connections = $configs['connections'];
+
+        foreach ($connections as $key => $configData)
+        {
             ConnectionRepository::register($key, $this->getConnectionFromConfiguration($configData));
+        }
+
+        if (array_key_exists('aliases', $configs) && is_array($configs['aliases']))
+        {
+            $aliases = $configs['aliases'];
+
+            foreach ($aliases as $alias => $key)
+            {
+                ConnectionRepository::registerAlias($alias, $key);
+            }
         }
     }
 
