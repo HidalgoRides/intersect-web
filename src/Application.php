@@ -2,6 +2,7 @@
 
 namespace Intersect;
 
+use Closure;
 use Intersect\Core\Event;
 use Intersect\AppContainer;
 use Intersect\Core\Http\Request;
@@ -21,11 +22,11 @@ use Intersect\Database\Connection\NullConnection;
 use Intersect\Database\Connection\ConnectionFactory;
 use Intersect\Database\Connection\ConnectionSettings;
 use Intersect\Database\Response\ModelResponseHandler;
+use Intersect\Database\Connection\ConnectionRepository;
 use Intersect\Http\Response\Handlers\TwigResponseHandler;
 use Intersect\Http\Response\Handlers\ViewResponseHandler;
 use Intersect\Http\Response\Handlers\ArrayResponseHandler;
 use Intersect\Http\Response\Handlers\StringResponseHandler;
-use Intersect\Database\Connection\ConnectionRepository;
 
 class Application {
 
@@ -397,9 +398,9 @@ class Application {
 
     /**
      * @param $key
-     * @param Command $command
+     * @param Command|Closure $command
      */
-    private function registerCommand($key, Command $command)
+    private function registerCommand($key, $command)
     {
         $this->container->getCommandRegistry()->register($key, $command);
     }
