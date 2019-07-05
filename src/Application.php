@@ -7,6 +7,7 @@ use Intersect\Core\Event;
 use Intersect\AppContainer;
 use Intersect\Core\Http\Request;
 use Intersect\Http\Router\Route;
+use Intersect\Core\Http\Response;
 use Intersect\Core\MethodInvoker;
 use Intersect\Core\ClosureInvoker;
 use Intersect\Http\RequestHandler;
@@ -240,7 +241,9 @@ class Application {
 
         $this->registerDefaultResponseHandlers();
 
-        $requestHandler = new RequestHandler($this->container, $this->getRouteRegistry(), $this->closureInvoker, $this->methodInvoker, $this->getClass(ExceptionHandler::class));
+        /** @var ExceptionHandler $exceptionHandler */
+        $exceptionHandler = $this->getClass(ExceptionHandler::class);
+        $requestHandler = new RequestHandler($this->container, $this->getRouteRegistry(), $this->closureInvoker, $this->methodInvoker, $exceptionHandler);
 
         $requestHandler->setPreInvocationCallback(function($controller) use ($request) {
             if ($controller instanceof AbstractController)
@@ -251,16 +254,7 @@ class Application {
         });
 
         $response = $requestHandler->handle($request);
-
-        /** @var ResponseHandler $responseHandler */
-        foreach ($this->registeredResponseHandlers as $responseHandler)
-        {
-            if ($responseHandler->canHandle($response))
-            {
-                $responseHandler->handle($response);
-                break;
-            }
-        }
+        $this->handleResponse($response, $exceptionHandler);
     }
 
     /**
@@ -319,6 +313,30 @@ class Application {
     private function getValue($key, array $data, $defaultValue = null)
     {
         return (array_key_exists($key, $data) ? $data[$key] : (!is_null($defaultValue) ? $defaultValue : null));
+    }
+
+    private function handleResponse(Response $response, ExceptionHandler $exceptionHandler = null)
+    {
+        foreach ($this->registeredResponseHandlers as $responseHandler)
+        {
+            if ($responseHandler->canHandle($response))
+            {
+                try {
+                    $responseHandler->handle($response);
+                } catch (\Exception $e) {
+                    if (!is_null($exceptionHandler))
+                    {
+                        $exceptionResponse = $exceptionHandler->handle($e);
+                        if (!is_null($exceptionResponse))
+                        {
+                            $this->handleResponse($exceptionResponse);
+                        }
+                    }
+                }
+
+                break;
+            }
+        }
     }
 
     private function loadConfiguration($baseFileName, $clientFileName, $rootPrefix = null)
