@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "hidalgo-rides/intersect-core",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/HidalgoRides/intersect-core.git",
-                "reference": "39adafa24fb410e4dc44f6cefea33bacdc504ed2"
+                "reference": "b46beef5cc848b5cf1d920659f96f1deba1e3d79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HidalgoRides/intersect-core/zipball/39adafa24fb410e4dc44f6cefea33bacdc504ed2",
-                "reference": "39adafa24fb410e4dc44f6cefea33bacdc504ed2",
+                "url": "https://api.github.com/repos/HidalgoRides/intersect-core/zipball/b46beef5cc848b5cf1d920659f96f1deba1e3d79",
+                "reference": "b46beef5cc848b5cf1d920659f96f1deba1e3d79",
                 "shasum": ""
             },
             "require": {
@@ -43,7 +43,7 @@
                 }
             ],
             "description": "Common classes used throughout Intersect libraries and projects.",
-            "time": "2019-07-06T19:49:55+00:00"
+            "time": "2019-07-08T06:09:49+00:00"
         },
         {
             "name": "hidalgo-rides/intersect-database",
@@ -86,16 +86,16 @@
         },
         {
             "name": "hidalgo-rides/intersect-http",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/HidalgoRides/intersect-http.git",
-                "reference": "88db711525acb60729a31c23c12cfe6909e9f23c"
+                "reference": "90b6c9282d440789a2e584f1bc8118452b67430a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HidalgoRides/intersect-http/zipball/88db711525acb60729a31c23c12cfe6909e9f23c",
-                "reference": "88db711525acb60729a31c23c12cfe6909e9f23c",
+                "url": "https://api.github.com/repos/HidalgoRides/intersect-http/zipball/90b6c9282d440789a2e584f1bc8118452b67430a",
+                "reference": "90b6c9282d440789a2e584f1bc8118452b67430a",
                 "shasum": ""
             },
             "require": {
@@ -121,7 +121,7 @@
                 }
             ],
             "description": "Handles HTTP request and routing for Intersect projects.",
-            "time": "2019-07-06T20:03:28+00:00"
+            "time": "2019-07-08T04:43:22+00:00"
         }
     ],
     "packages-dev": [
@@ -751,16 +751,16 @@
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "3.0.1",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "c99e3be9d3e85f60646f152f9002d46ed7770d18"
+                "reference": "c4a66b97f040e3e20b3aa2a243230a1c3a9f7c8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/c99e3be9d3e85f60646f152f9002d46ed7770d18",
-                "reference": "c99e3be9d3e85f60646f152f9002d46ed7770d18",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/c4a66b97f040e3e20b3aa2a243230a1c3a9f7c8c",
+                "reference": "c4a66b97f040e3e20b3aa2a243230a1c3a9f7c8c",
                 "shasum": ""
             },
             "require": {
@@ -796,7 +796,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2018-10-30T05:52:18+00:00"
+            "time": "2019-07-08T05:24:54+00:00"
         },
         {
             "name": "phpunit/phpunit",

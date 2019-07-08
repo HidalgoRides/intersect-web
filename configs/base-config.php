@@ -5,11 +5,11 @@ return [
         'connections' => [
             'default' => [
                 'driver' => 'mysql',
-                'host' => 'db',
-                'username' => 'root',
-                'password' => 'password',
+                'host' => 'xxx',
+                'username' => 'xxx',
+                'password' => 'xxx',
                 'port' => '3306',
-                'name' => 'app',
+                'name' => 'xxx',
                 'schema' => null,
                 'charset' => 'utf8'
             ]
