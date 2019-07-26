@@ -28,6 +28,8 @@ use Intersect\Http\Response\Handlers\TwigResponseHandler;
 use Intersect\Http\Response\Handlers\ViewResponseHandler;
 use Intersect\Http\Response\Handlers\ArrayResponseHandler;
 use Intersect\Http\Response\Handlers\StringResponseHandler;
+use Intersect\Http\Response\Handlers\XmlResponseHandler;
+use Intersect\Http\Response\Handlers\JsonResponseHandler;
 
 class Application {
 
@@ -483,8 +485,8 @@ class Application {
 
     private function registerDefaultResponseHandlers()
     {
-        $this->registerResponseHandler(new ArrayResponseHandler());
-        $this->registerResponseHandler(new StringResponseHandler());
+        $this->registerResponseHandler(new JsonResponseHandler());
+        $this->registerResponseHandler(new XmlResponseHandler());
         $this->registerResponseHandler(new ModelResponseHandler());
 
         $templatesPath = $this->getTemplatesPath();
@@ -509,6 +511,8 @@ class Application {
         
         $this->registerResponseHandler(new TwigResponseHandler($templatesPath, $twigConfigs));
         $this->registerResponseHandler(new ViewResponseHandler($templatesPath));
+        $this->registerResponseHandler(new ArrayResponseHandler());
+        $this->registerResponseHandler(new StringResponseHandler());
     }
 
     /**
