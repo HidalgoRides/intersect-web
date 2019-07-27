@@ -21,11 +21,12 @@
     }
   },
   "require": {
-    "hidalgo-rides/intersect-database": "1.1.*",
+    "hidalgo-rides/intersect-database": "dev-feature/xml-response-handler",
     "hidalgo-rides/intersect-http": "dev-feature/xml-response-handler"
   },
   "require-dev": {
-    "phpunit/phpunit": "^7"
+    "phpunit/phpunit": "^7",
+    "twig/twig": "^2.0"
   },
   "config": {
       "discard-changes": true

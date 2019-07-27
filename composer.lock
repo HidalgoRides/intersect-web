@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "93f7376a4e830c816866a38ea2d142fc",
+    "content-hash": "0d43a8155df7992d619cbd491ed071ad",
     "packages": [
         {
             "name": "hidalgo-rides/intersect-core",
-            "version": "1.1.1",
+            "version": "dev-feature/xml-response-handler",
             "source": {
                 "type": "git",
                 "url": "https://github.com/HidalgoRides/intersect-core.git",
-                "reference": "b46beef5cc848b5cf1d920659f96f1deba1e3d79"
+                "reference": "2ff35e64f7b0b5d23767daef4ff4da789b436ec3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HidalgoRides/intersect-core/zipball/b46beef5cc848b5cf1d920659f96f1deba1e3d79",
-                "reference": "b46beef5cc848b5cf1d920659f96f1deba1e3d79",
+                "url": "https://api.github.com/repos/HidalgoRides/intersect-core/zipball/2ff35e64f7b0b5d23767daef4ff4da789b436ec3",
+                "reference": "2ff35e64f7b0b5d23767daef4ff4da789b436ec3",
                 "shasum": ""
             },
             "require": {
@@ -43,24 +43,24 @@
                 }
             ],
             "description": "Common classes used throughout Intersect libraries and projects.",
-            "time": "2019-07-08T06:09:49+00:00"
+            "time": "2019-07-26T06:31:36+00:00"
         },
         {
             "name": "hidalgo-rides/intersect-database",
-            "version": "1.1.0",
+            "version": "dev-feature/xml-response-handler",
             "source": {
                 "type": "git",
                 "url": "https://github.com/HidalgoRides/intersect-database.git",
-                "reference": "724474ac66eac9a728bfc9f5177f3ed7fecdf2da"
+                "reference": "f623218f4fbaeda1ae7aa150d27cbb1472377945"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HidalgoRides/intersect-database/zipball/724474ac66eac9a728bfc9f5177f3ed7fecdf2da",
-                "reference": "724474ac66eac9a728bfc9f5177f3ed7fecdf2da",
+                "url": "https://api.github.com/repos/HidalgoRides/intersect-database/zipball/f623218f4fbaeda1ae7aa150d27cbb1472377945",
+                "reference": "f623218f4fbaeda1ae7aa150d27cbb1472377945",
                 "shasum": ""
             },
             "require": {
-                "hidalgo-rides/intersect-core": "1.1.*"
+                "hidalgo-rides/intersect-core": "dev-feature/xml-response-handler"
             },
             "require-dev": {
                 "phpunit/phpunit": "^7"
@@ -82,7 +82,7 @@
                 }
             ],
             "description": "Database abstraction layer used throughout Intersect libraries and projects.",
-            "time": "2019-07-06T20:06:02+00:00"
+            "time": "2019-07-26T06:45:20+00:00"
         },
         {
             "name": "hidalgo-rides/intersect-http",
@@ -90,20 +90,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/HidalgoRides/intersect-http.git",
-                "reference": "cdd024d8a74b494c2569bee25099e4c2b0fcd25e"
+                "reference": "6efd0db2f0fa2422a23d7082003be4299cab9e9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HidalgoRides/intersect-http/zipball/cdd024d8a74b494c2569bee25099e4c2b0fcd25e",
-                "reference": "cdd024d8a74b494c2569bee25099e4c2b0fcd25e",
+                "url": "https://api.github.com/repos/HidalgoRides/intersect-http/zipball/6efd0db2f0fa2422a23d7082003be4299cab9e9e",
+                "reference": "6efd0db2f0fa2422a23d7082003be4299cab9e9e",
                 "shasum": ""
             },
             "require": {
-                "hidalgo-rides/intersect-core": "1.1.*",
+                "hidalgo-rides/intersect-core": "dev-feature/xml-response-handler",
                 "timkippdev/array-to-xml-converter": "1.0.*"
             },
             "require-dev": {
-                "phpunit/phpunit": "^7"
+                "phpunit/phpunit": "^7",
+                "twig/twig": "^2.0"
             },
             "type": "library",
             "autoload": {
@@ -122,7 +123,7 @@
                 }
             ],
             "description": "Handles HTTP request and routing for Intersect projects.",
-            "time": "2019-07-25T07:38:00+00:00"
+            "time": "2019-07-27T01:58:16+00:00"
         },
         {
             "name": "timkippdev/array-to-xml-converter",
@@ -1553,6 +1554,65 @@
             "time": "2019-02-06T07:57:58+00:00"
         },
         {
+            "name": "symfony/polyfill-mbstring",
+            "version": "v1.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-mbstring.git",
+                "reference": "fe5e94c604826c35a32fa832f35bd036b6799609"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/fe5e94c604826c35a32fa832f35bd036b6799609",
+                "reference": "fe5e94c604826c35a32fa832f35bd036b6799609",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "ext-mbstring": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.11-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Mbstring\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for the Mbstring extension",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "mbstring",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "time": "2019-02-06T07:57:58+00:00"
+        },
+        {
             "name": "theseer/tokenizer",
             "version": "1.1.3",
             "source": {
@@ -1591,6 +1651,73 @@
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
             "time": "2019-06-13T22:48:21+00:00"
+        },
+        {
+            "name": "twig/twig",
+            "version": "v2.11.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/Twig.git",
+                "reference": "699ed2342557c88789a15402de5eb834dedd6792"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/699ed2342557c88789a15402de5eb834dedd6792",
+                "reference": "699ed2342557c88789a15402de5eb834dedd6792",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0",
+                "symfony/polyfill-ctype": "^1.8",
+                "symfony/polyfill-mbstring": "^1.3"
+            },
+            "require-dev": {
+                "psr/container": "^1.0",
+                "symfony/debug": "^2.7",
+                "symfony/phpunit-bridge": "^3.4.19|^4.1.8|^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.11-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Twig_": "lib/"
+                },
+                "psr-4": {
+                    "Twig\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Armin Ronacher",
+                    "email": "armin.ronacher@active-4.com",
+                    "role": "Project Founder"
+                },
+                {
+                    "name": "Twig Team",
+                    "homepage": "https://twig.symfony.com/contributors",
+                    "role": "Contributors"
+                }
+            ],
+            "description": "Twig, the flexible, fast, and secure template language for PHP",
+            "homepage": "https://twig.symfony.com",
+            "keywords": [
+                "templating"
+            ],
+            "time": "2019-06-18T15:37:11+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -1647,6 +1774,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "hidalgo-rides/intersect-database": 20,
         "hidalgo-rides/intersect-http": 20
     },
     "prefer-stable": true,

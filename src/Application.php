@@ -7,29 +7,23 @@ use Intersect\Core\Event;
 use Intersect\AppContainer;
 use Intersect\Core\Http\Request;
 use Intersect\Http\Router\Route;
-use Intersect\Core\Http\Response;
 use Intersect\Core\MethodInvoker;
 use Intersect\Core\ClosureInvoker;
 use Intersect\Http\RequestHandler;
 use Intersect\Core\Command\Command;
 use Intersect\Http\ExceptionHandler;
 use Intersect\Core\ParameterResolver;
+use Intersect\Http\Response\Response;
 use Intersect\Http\Router\RouteGroup;
 use Intersect\Core\Storage\FileStorage;
-use Intersect\Core\Http\ResponseHandler;
 use Intersect\Http\Router\RouteRegistry;
 use Intersect\Database\Connection\Connection;
 use Intersect\Database\Connection\NullConnection;
 use Intersect\Database\Connection\ConnectionFactory;
 use Intersect\Database\Connection\ConnectionSettings;
-use Intersect\Database\Response\ModelResponseHandler;
 use Intersect\Database\Connection\ConnectionRepository;
-use Intersect\Http\Response\Handlers\TwigResponseHandler;
-use Intersect\Http\Response\Handlers\ViewResponseHandler;
-use Intersect\Http\Response\Handlers\ArrayResponseHandler;
-use Intersect\Http\Response\Handlers\StringResponseHandler;
-use Intersect\Http\Response\Handlers\XmlResponseHandler;
-use Intersect\Http\Response\Handlers\JsonResponseHandler;
+use Intersect\Http\Response\ViewResponse;
+use Intersect\Http\Response\TwigResponse;
 
 class Application {
 
@@ -54,9 +48,6 @@ class Application {
 
     /** @var MethodInvoker */
     private $methodInvoker;
-
-    /** @var ResponseHandler[] */
-    private $registeredResponseHandlers = [];
 
     private function __construct()
     {
@@ -241,8 +232,6 @@ class Application {
         $this->init();
         $this->registerSingleton(Request::class, $request);
 
-        $this->registerDefaultResponseHandlers();
-
         /** @var ExceptionHandler $exceptionHandler */
         $exceptionHandler = $this->getClass(ExceptionHandler::class);
         $requestHandler = new RequestHandler($this->container, $this->getRouteRegistry(), $this->closureInvoker, $this->methodInvoker, $exceptionHandler);
@@ -282,11 +271,6 @@ class Application {
         return $this->methodInvoker->invoke($class, $methodName, $namedParameters);
     }
 
-    public function registerResponseHandler(ResponseHandler $responseHandler)
-    {
-        $this->registeredResponseHandlers[] = $responseHandler;
-    }
-
     public function setBasePath($basePath)
     {
         $this->basePath = rtrim($basePath, '/');
@@ -319,24 +303,46 @@ class Application {
 
     private function handleResponse(Response $response, ExceptionHandler $exceptionHandler = null)
     {
-        foreach ($this->registeredResponseHandlers as $responseHandler)
-        {
-            if ($responseHandler->canHandle($response))
+        try {
+            if ($response instanceof ViewResponse)
             {
-                try {
-                    $responseHandler->handle($response);
-                } catch (\Exception $e) {
-                    if (!is_null($exceptionHandler))
+                $response->handle($this->getTemplatesPath());
+            }
+            else if ($response instanceof TwigResponse)
+            {
+                $twigConfigs = $this->getRegisteredConfigs('twig');
+
+                if (is_null($twigConfigs))
+                {
+                    $twigConfigs = [];
+                }
+                else
+                {
+                    if (array_key_exists('options', $twigConfigs) && array_key_exists('cache', $twigConfigs['options']))
                     {
-                        $exceptionResponse = $exceptionHandler->handle($e);
-                        if (!is_null($exceptionResponse))
+                        $cachePath = $twigConfigs['options']['cache'];
+
+                        if (!is_bool($cachePath))
                         {
-                            $this->handleResponse($exceptionResponse);
+                            $twigConfigs['options']['cache'] = $this->getCachePath() . '/'. ltrim($cachePath, '/');
                         }
                     }
                 }
 
-                break;
+                $response->handle($this->getTemplatesPath(), $twigConfigs);
+            }
+            else
+            {
+                $response->handle();
+            }
+        } catch (\Exception $e) {
+            if (!is_null($exceptionHandler))
+            {
+                $exceptionResponse = $exceptionHandler->handle($e);
+                if (!is_null($exceptionResponse))
+                {
+                    $this->handleResponse($exceptionResponse);
+                }
             }
         }
     }
@@ -481,38 +487,6 @@ class Application {
                 ConnectionRepository::registerAlias($alias, $key);
             }
         }
-    }
-
-    private function registerDefaultResponseHandlers()
-    {
-        $this->registerResponseHandler(new JsonResponseHandler());
-        $this->registerResponseHandler(new XmlResponseHandler());
-        $this->registerResponseHandler(new ModelResponseHandler());
-
-        $templatesPath = $this->getTemplatesPath();
-        $twigConfigs = $this->getRegisteredConfigs('twig');
-
-        if (is_null($twigConfigs))
-        {
-            $twigConfigs = [];
-        }
-        else
-        {
-            if (array_key_exists('options', $twigConfigs) && array_key_exists('cache', $twigConfigs['options']))
-            {
-                $cachePath = $twigConfigs['options']['cache'];
-
-                if (!is_bool($cachePath))
-                {
-                    $twigConfigs['options']['cache'] = $this->getCachePath() . '/'. ltrim($cachePath, '/');
-                }
-            }
-        }
-        
-        $this->registerResponseHandler(new TwigResponseHandler($templatesPath, $twigConfigs));
-        $this->registerResponseHandler(new ViewResponseHandler($templatesPath));
-        $this->registerResponseHandler(new ArrayResponseHandler());
-        $this->registerResponseHandler(new StringResponseHandler());
     }
 
     /**
