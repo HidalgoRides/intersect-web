@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0d43a8155df7992d619cbd491ed071ad",
+    "content-hash": "b419cb95398ef83d6aebb7fdd5924e8f",
     "packages": [
         {
             "name": "hidalgo-rides/intersect-core",
-            "version": "dev-feature/xml-response-handler",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/HidalgoRides/intersect-core.git",
-                "reference": "2ff35e64f7b0b5d23767daef4ff4da789b436ec3"
+                "reference": "04c99467582dfd9bc4ccf1072876dea1e790353e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HidalgoRides/intersect-core/zipball/2ff35e64f7b0b5d23767daef4ff4da789b436ec3",
-                "reference": "2ff35e64f7b0b5d23767daef4ff4da789b436ec3",
+                "url": "https://api.github.com/repos/HidalgoRides/intersect-core/zipball/04c99467582dfd9bc4ccf1072876dea1e790353e",
+                "reference": "04c99467582dfd9bc4ccf1072876dea1e790353e",
                 "shasum": ""
             },
             "require": {
@@ -43,24 +43,24 @@
                 }
             ],
             "description": "Common classes used throughout Intersect libraries and projects.",
-            "time": "2019-07-26T06:31:36+00:00"
+            "time": "2019-07-27T03:00:42+00:00"
         },
         {
             "name": "hidalgo-rides/intersect-database",
-            "version": "dev-feature/xml-response-handler",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/HidalgoRides/intersect-database.git",
-                "reference": "f623218f4fbaeda1ae7aa150d27cbb1472377945"
+                "reference": "0c228f9f343a4411ccb60bd561f14619b0096c27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HidalgoRides/intersect-database/zipball/f623218f4fbaeda1ae7aa150d27cbb1472377945",
-                "reference": "f623218f4fbaeda1ae7aa150d27cbb1472377945",
+                "url": "https://api.github.com/repos/HidalgoRides/intersect-database/zipball/0c228f9f343a4411ccb60bd561f14619b0096c27",
+                "reference": "0c228f9f343a4411ccb60bd561f14619b0096c27",
                 "shasum": ""
             },
             "require": {
-                "hidalgo-rides/intersect-core": "dev-feature/xml-response-handler"
+                "hidalgo-rides/intersect-core": "1.1.*"
             },
             "require-dev": {
                 "phpunit/phpunit": "^7"
@@ -82,24 +82,24 @@
                 }
             ],
             "description": "Database abstraction layer used throughout Intersect libraries and projects.",
-            "time": "2019-07-26T06:45:20+00:00"
+            "time": "2019-07-27T03:05:06+00:00"
         },
         {
             "name": "hidalgo-rides/intersect-http",
-            "version": "dev-feature/xml-response-handler",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/HidalgoRides/intersect-http.git",
-                "reference": "6efd0db2f0fa2422a23d7082003be4299cab9e9e"
+                "reference": "9c1e1a30ea1e4837d7f8464d1a2d133c22a2b4a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HidalgoRides/intersect-http/zipball/6efd0db2f0fa2422a23d7082003be4299cab9e9e",
-                "reference": "6efd0db2f0fa2422a23d7082003be4299cab9e9e",
+                "url": "https://api.github.com/repos/HidalgoRides/intersect-http/zipball/9c1e1a30ea1e4837d7f8464d1a2d133c22a2b4a4",
+                "reference": "9c1e1a30ea1e4837d7f8464d1a2d133c22a2b4a4",
                 "shasum": ""
             },
             "require": {
-                "hidalgo-rides/intersect-core": "dev-feature/xml-response-handler",
+                "hidalgo-rides/intersect-core": "1.1.*",
                 "timkippdev/array-to-xml-converter": "1.0.*"
             },
             "require-dev": {
@@ -123,7 +123,7 @@
                 }
             ],
             "description": "Handles HTTP request and routing for Intersect projects.",
-            "time": "2019-07-27T01:58:16+00:00"
+            "time": "2019-07-27T03:09:59+00:00"
         },
         {
             "name": "timkippdev/array-to-xml-converter",
@@ -1773,10 +1773,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "hidalgo-rides/intersect-database": 20,
-        "hidalgo-rides/intersect-http": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],
