@@ -2,20 +2,16 @@
 
 namespace Intersect;
 
-use Closure;
-use Intersect\Core\Event;
-use Intersect\AppContainer;
-use Intersect\Core\Http\Request;
-use Intersect\Http\Router\Route;
-use Intersect\Core\MethodInvoker;
-use Intersect\Core\ClosureInvoker;
-use Intersect\Http\RequestHandler;
 use Intersect\Core\Command\Command;
+use Intersect\Core\Container;
+use Intersect\Core\Event;
+use Intersect\Core\Http\Request;
+use Intersect\Core\Storage\FileStorage;
+use Intersect\Http\Router\Route;
+use Intersect\Http\RequestHandler;
 use Intersect\Http\ExceptionHandler;
-use Intersect\Core\ParameterResolver;
 use Intersect\Http\Response\Response;
 use Intersect\Http\Router\RouteGroup;
-use Intersect\Core\Storage\FileStorage;
 use Intersect\Http\Router\RouteRegistry;
 use Intersect\Database\Connection\Connection;
 use Intersect\Database\Connection\NullConnection;
@@ -24,14 +20,10 @@ use Intersect\Database\Connection\ConnectionSettings;
 use Intersect\Database\Connection\ConnectionRepository;
 use Intersect\Http\Response\ViewResponse;
 use Intersect\Http\Response\TwigResponse;
-use Intersect\Core\Container;
 
 class Application extends Container {
 
     private static $CONFIG_DIRECTORY_PATH = '/configs';
-
-    /** @var AppContainer */
-    protected $container;
 
     /** @var static */
     private static $INSTANCE;
@@ -39,16 +31,7 @@ class Application extends Container {
     /** @var string */
     private $basePath = '';
 
-    /** @var ClosureInvoker */
-    private $closureInvoker;
-
-    /** @var FileStorage */
-    private $fileStorage;
-
     private $isInitialized = false;
-
-    /** @var MethodInvoker */
-    private $methodInvoker;
 
     /** @var RouteRegistry */
     private $routeRegistry;
@@ -56,11 +39,8 @@ class Application extends Container {
     public function __construct()
     {
         parent::__construct();
-        
-        $parameterResolver = new ParameterResolver($this->getClassResolver());
-        $this->closureInvoker = new ClosureInvoker($parameterResolver);
-        $this->methodInvoker = new MethodInvoker($parameterResolver);
         $this->routeRegistry = new RouteRegistry();
+        self::$INSTANCE = $this;
     }
 
     public function init()
@@ -69,9 +49,6 @@ class Application extends Container {
         {
             return;
         }
-
-        /** @var FileStorage $fileStorage */
-        $this->fileStorage = new FileStorage();
 
         $this->loadConfiguration('base-config.php', 'config.php');
         $this->registerConnections();
@@ -120,7 +97,7 @@ class Application extends Container {
     public function fireEvent($eventKey, $data = [])
     {
         /** @var Event $event */
-        $event = $this->getEventRegistry()->get($eventKey);
+        $event = $this->eventRegistry->get($eventKey);
 
         if (!is_null($event))
         {
@@ -149,14 +126,6 @@ class Application extends Container {
         return (!is_null($connection) ? $connection : new NullConnection());
     }
 
-    /**
-     * @return AppContainer
-     */
-    public function getContainer()
-    {
-        return $this->container;
-    }
-
     public function getBasePath()
     {
         return $this->basePath;
@@ -182,33 +151,6 @@ class Application extends Container {
         return $this->getBasePath() . $this->getRegisteredConfigs('paths.migrations');
     }
 
-    public function getRegisteredCommands()
-    {
-        return $this->getCommandRegistry()->getAll();
-    }
-
-    public function getRegisteredConfigs($key = null, $defaultValue = null)
-    {
-        if (is_null($key))
-        {
-            return $this->getConfigRegistry()->getAll();
-        }
-
-        $registeredConfig = $this->getConfigRegistry()->get($key);
-
-        if (is_null($registeredConfig))
-        {
-            $registeredConfig = $defaultValue;
-        }
-
-        return $registeredConfig;
-    }
-
-    public function getRegisteredEvents()
-    {
-        return $this->getEventRegistry()->getAll();
-    }
-
     public function getRegisteredRoutes($method = null, $path = null)
     {
         if (is_null($method))
@@ -227,11 +169,11 @@ class Application extends Container {
     public function handleRequest(Request $request)
     {
         $this->init();
-        $this->registerSingleton(Request::class, $request);
+        $this->singleton(Request::class, $request);
 
         /** @var ExceptionHandler $exceptionHandler */
         $exceptionHandler = $this->getClass(ExceptionHandler::class);
-        $requestHandler = new RequestHandler($this, $this->routeRegistry, $this->closureInvoker, $this->methodInvoker, $exceptionHandler);
+        $requestHandler = new RequestHandler($this, $this->routeRegistry, $exceptionHandler);
 
         $requestHandler->setPreInvocationCallback(function($controller) use ($request) {
             if ($controller instanceof AbstractController)
@@ -243,29 +185,6 @@ class Application extends Container {
 
         $response = $requestHandler->handle($request);
         $this->handleResponse($response, $exceptionHandler);
-    }
-
-    /**
-     * @param $closure
-     * @param array $namedParameters
-     * @return object
-     * @throws \Exception
-     */
-    public function invokeClosure($closure, $namedParameters = array())
-    {
-        return $this->closureInvoker->invoke($closure, $namedParameters);
-    }
-
-    /**
-     * @param $class
-     * @param $methodName
-     * @param array $namedParameters
-     * @return mixed
-     * @throws \Exception
-     */
-    public function invokeMethod($class, $methodName, $namedParameters = array())
-    {
-        return $this->methodInvoker->invoke($class, $methodName, $namedParameters);
     }
 
     public function setBasePath($basePath)
@@ -370,25 +289,25 @@ class Application extends Container {
                 case 'classes':
                     foreach ($value as $name => $class)
                     {
-                        $this->registerClass($name, $class);
+                        $this->bind($name, $class);
                     }
                     break;
                 case 'singletons':
                     foreach ($value as $name => $class)
                     {
-                        $this->registerSingleton($name, $class);
+                        $this->singleton($name, $class);
                     }
                     break;
                 case 'commands':
                     foreach ($value as $name => $command)
                     {
-                        $this->registerCommand($name, $command);
+                        $this->command($name, $command);
                     }
                     break;
                 case 'events':
                     foreach ($value as $name => $event)
                     {
-                        $this->registerEvent($name, $event);
+                        $this->event($name, $event);
                     }
                     break;
                 default:
@@ -420,23 +339,16 @@ class Application extends Container {
     }
 
     /**
-     * @param $key
-     * @param Command|Closure $command
-     */
-    private function registerCommand($key, $command)
-    {
-        $this->getCommandRegistry()->register($key, $command);
-    }
-
-    /**
      * @param $filePath
      * @param null $rootPrefix
      */
     private function registerConfigurationFile($filePath, $rootPrefix = null)
     {
-        if ($this->fileStorage->fileExists($filePath))
+        $fileStorage = FileStorage::getInstance();
+
+        if ($fileStorage->fileExists($filePath))
         {
-            $configData = $this->fileStorage->require($filePath);
+            $configData = $fileStorage->require($filePath);
 
             if (!is_null($rootPrefix))
             {
@@ -461,13 +373,6 @@ class Application extends Container {
             return;
         }
 
-        // support old connection configuration
-        if (!array_key_exists('connections', $configs))
-        {
-            ConnectionRepository::register($this->getConnectionFromConfiguration($configs));
-            return;
-        }
-
         $connections = $configs['connections'];
 
         foreach ($connections as $key => $configData)
@@ -487,15 +392,6 @@ class Application extends Container {
     }
 
     /**
-     * @param $key
-     * @param Event $event
-     */
-    private function registerEvent($key, Event $event)
-    {
-        $this->getEventRegistry()->register($key, $event);
-    }
-
-    /**
      * @param Route $route
      */
     private function registerRoute(Route $route)
@@ -509,24 +405,6 @@ class Application extends Container {
     private function registerRouteGroup(RouteGroup $routeGroup)
     {
         $this->routeRegistry->registerRouteGroup($routeGroup);
-    }
-
-    /**
-     * @param $name
-     * @param $class
-     */
-    private function registerClass($name, $class)
-    {
-        $this->getClassRegistry()->register($name, $class);
-    }
-
-    /**
-     * @param $name
-     * @param $class
-     */
-    private function registerSingleton($name, $class)
-    {
-        $this->getClassRegistry()->register($name, $class, true);
     }
 
 }

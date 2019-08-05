@@ -61,7 +61,7 @@ class ComposerUtils {
         }
 
         $app = Application::instance();
-        $fs = new FileStorage();
+        $fs = FileStorage::getInstance();
 
         $composerPath = $app->getBasePath() . '/composer.lock';
 

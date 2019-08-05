@@ -1,19 +1,12 @@
 <?php
 
-use \Intersect\Application;
 use Intersect\Core\Storage\FileStorage;
-use Intersect\Database\Connection\Connection;
 use Intersect\Http\ExceptionHandler;
 use Intersect\Http\DefaultExceptionHandler;
-
-$app = Application::instance();
-$connection = $app->getConnection();
 
 return [
     'classes' => [],
     'singletons' => [
-        Application::class => $app,
-        Connection::class => $connection,
         FileStorage::class => FileStorage::class,
         ExceptionHandler::class => DefaultExceptionHandler::class
     ],
