@@ -24,8 +24,9 @@ use Intersect\Database\Connection\ConnectionSettings;
 use Intersect\Database\Connection\ConnectionRepository;
 use Intersect\Http\Response\ViewResponse;
 use Intersect\Http\Response\TwigResponse;
+use Intersect\Core\Container;
 
-class Application {
+class Application extends Container {
 
     private static $CONFIG_DIRECTORY_PATH = '/configs';
 
@@ -49,13 +50,17 @@ class Application {
     /** @var MethodInvoker */
     private $methodInvoker;
 
-    private function __construct()
-    {
-        $this->container = new AppContainer();
+    /** @var RouteRegistry */
+    private $routeRegistry;
 
-        $parameterResolver = new ParameterResolver($this->container->getClassResolver());
+    public function __construct()
+    {
+        parent::__construct();
+        
+        $parameterResolver = new ParameterResolver($this->getClassResolver());
         $this->closureInvoker = new ClosureInvoker($parameterResolver);
         $this->methodInvoker = new MethodInvoker($parameterResolver);
+        $this->routeRegistry = new RouteRegistry();
     }
 
     public function init()
@@ -100,7 +105,7 @@ class Application {
     public function fireCommand($commandKey, $data = [])
     {
         /** @var Command $registeredCommand */
-        $registeredCommand = $this->container->getCommandRegistry()->get($commandKey);
+        $registeredCommand = $this->getCommandRegistry()->get($commandKey);
 
         if (!is_null($registeredCommand))
         {
@@ -115,7 +120,7 @@ class Application {
     public function fireEvent($eventKey, $data = [])
     {
         /** @var Event $event */
-        $event = $this->container->getEventRegistry()->get($eventKey);
+        $event = $this->getEventRegistry()->get($eventKey);
 
         if (!is_null($event))
         {
@@ -131,7 +136,7 @@ class Application {
      */
     public function getClass($class, $namedParameters = [])
     {
-        return $this->container->resolveClass($class, $namedParameters);
+        return $this->resolveClass($class, $namedParameters);
     }
 
     /**
@@ -179,17 +184,17 @@ class Application {
 
     public function getRegisteredCommands()
     {
-        return $this->container->getCommandRegistry()->getAll();
+        return $this->getCommandRegistry()->getAll();
     }
 
     public function getRegisteredConfigs($key = null, $defaultValue = null)
     {
         if (is_null($key))
         {
-            return $this->container->getConfigRegistry()->getAll();
+            return $this->getConfigRegistry()->getAll();
         }
 
-        $registeredConfig = $this->container->getConfigRegistry()->get($key);
+        $registeredConfig = $this->getConfigRegistry()->get($key);
 
         if (is_null($registeredConfig))
         {
@@ -201,25 +206,17 @@ class Application {
 
     public function getRegisteredEvents()
     {
-        return $this->container->getEventRegistry()->getAll();
+        return $this->getEventRegistry()->getAll();
     }
 
     public function getRegisteredRoutes($method = null, $path = null)
     {
         if (is_null($method))
         {
-            return $this->getRouteRegistry()->getAll();
+            return $this->routeRegistry->getAll();
         }
 
-        return $this->getRouteRegistry()->get($method, $path);
-    }
-
-    /**
-     * @return RouteRegistry
-     */
-    public function getRouteRegistry()
-    {
-        return $this->container->getRouteRegistry();
+        return $this->routeRegistry->get($method, $path);
     }
 
     public function getTemplatesPath()
@@ -234,7 +231,7 @@ class Application {
 
         /** @var ExceptionHandler $exceptionHandler */
         $exceptionHandler = $this->getClass(ExceptionHandler::class);
-        $requestHandler = new RequestHandler($this->container, $this->getRouteRegistry(), $this->closureInvoker, $this->methodInvoker, $exceptionHandler);
+        $requestHandler = new RequestHandler($this, $this->routeRegistry, $this->closureInvoker, $this->methodInvoker, $exceptionHandler);
 
         $requestHandler->setPreInvocationCallback(function($controller) use ($request) {
             if ($controller instanceof AbstractController)
@@ -428,7 +425,7 @@ class Application {
      */
     private function registerCommand($key, $command)
     {
-        $this->container->getCommandRegistry()->register($key, $command);
+        $this->getCommandRegistry()->register($key, $command);
     }
 
     /**
@@ -446,7 +443,7 @@ class Application {
                 $configData = [$rootPrefix => $configData];
             }
 
-            $this->container->getConfigRegistry()->register($configData);
+            $this->getConfigRegistry()->register($configData);
         }
     }
 
@@ -495,7 +492,7 @@ class Application {
      */
     private function registerEvent($key, Event $event)
     {
-        $this->container->getEventRegistry()->register($key, $event);
+        $this->getEventRegistry()->register($key, $event);
     }
 
     /**
@@ -503,7 +500,7 @@ class Application {
      */
     private function registerRoute(Route $route)
     {
-        $this->container->getRouteRegistry()->registerRoute($route);
+        $this->routeRegistry->registerRoute($route);
     }
 
     /**
@@ -511,7 +508,7 @@ class Application {
      */
     private function registerRouteGroup(RouteGroup $routeGroup)
     {
-        $this->container->getRouteRegistry()->registerRouteGroup($routeGroup);
+        $this->routeRegistry->registerRouteGroup($routeGroup);
     }
 
     /**
@@ -520,7 +517,7 @@ class Application {
      */
     private function registerClass($name, $class)
     {
-        $this->container->getClassRegistry()->register($name, $class);
+        $this->getClassRegistry()->register($name, $class);
     }
 
     /**
@@ -529,7 +526,7 @@ class Application {
      */
     private function registerSingleton($name, $class)
     {
-        $this->container->getClassRegistry()->register($name, $class, true);
+        $this->getClassRegistry()->register($name, $class, true);
     }
 
 }

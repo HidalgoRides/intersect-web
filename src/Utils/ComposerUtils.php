@@ -7,6 +7,8 @@ use Intersect\Core\Storage\FileStorage;
 
 class ComposerUtils {
 
+    private static $CACHED_DATA = null;
+
     public static function getVersions($includeDevDependencies = false)
     {
         $composerData = self::getComposerData();
@@ -53,17 +55,26 @@ class ComposerUtils {
 
     public static function getComposerData()
     {
+        if (!is_null(self::$CACHED_DATA))
+        {
+            return self::$CACHED_DATA;
+        }
+
         $app = Application::instance();
         $fs = new FileStorage();
 
         $composerPath = $app->getBasePath() . '/composer.lock';
 
-        if (!$fs->directoryExists($composerPath))
+        if (!$fs->fileExists($composerPath))
         {
             throw new \Exception('composer.lock file not found in application base path ("' . $app->getBasePath() . '")');
         }
 
-        return json_decode($fs->getFile($composerPath), true);
+        $data = json_decode($fs->getFile($composerPath), true);
+
+        self::$CACHED_DATA = $data;
+
+        return $data;
     }
 
 }
