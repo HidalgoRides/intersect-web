@@ -31,6 +31,8 @@ class Application extends Container {
     /** @var string */
     private $basePath = '';
 
+    private $key;
+
     private $isInitialized = false;
 
     /** @var RouteRegistry */
@@ -58,6 +60,15 @@ class Application extends Container {
 
         $this->loadRegistryData();
         $this->loadRouteData();
+
+        $applicationKey = $this->getRegisteredConfigs('app.key');
+        
+        if (is_null($applicationKey) || trim($applicationKey == ''))
+        {
+            throw new \Exception('Application key not set! Please add the required configuration for "app.key"');
+        }
+
+        $this->key = $applicationKey;
 
         $this->isInitialized = true;
     }

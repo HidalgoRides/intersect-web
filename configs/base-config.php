@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'app' => [
+        'key' => ''
+    ],
     'database' => [
         'connections' => [
             'default' => [
