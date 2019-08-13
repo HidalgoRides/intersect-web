@@ -6,6 +6,7 @@ use Intersect\Core\Command\Command;
 use Intersect\Core\Container;
 use Intersect\Core\Event;
 use Intersect\Core\Http\Request;
+use Intersect\Core\Providers\ServiceProvider;
 use Intersect\Core\Storage\FileStorage;
 use Intersect\Http\Router\Route;
 use Intersect\Http\RequestHandler;
@@ -30,10 +31,9 @@ class Application extends Container {
 
     /** @var string */
     private $basePath = '';
-
-    private $key;
-
     private $isInitialized = false;
+    private $key;
+    private $loadedProviders = [];
 
     /** @var RouteRegistry */
     private $routeRegistry;
@@ -53,13 +53,7 @@ class Application extends Container {
         }
 
         $this->loadConfiguration('base-config.php', 'config.php');
-        $this->registerConnections();
-
-        $this->loadConfiguration('base-registry.php', 'registry.php', 'registry');
         $this->loadConfiguration('base-routes.php', 'routes.php', 'routes');
-
-        $this->loadRegistryData();
-        $this->loadRouteData();
 
         $applicationKey = $this->getRegisteredConfigs('app.key');
         
@@ -68,8 +62,12 @@ class Application extends Container {
             throw new \Exception('Application key not set! Please add the required configuration for "app.key"');
         }
 
-        $this->key = $applicationKey;
+        $this->loadRouteData();
 
+        $this->registerConnections();
+        $this->loadProviders();
+
+        $this->key = $applicationKey;
         $this->isInitialized = true;
     }
 
@@ -285,46 +283,34 @@ class Application extends Container {
         $this->registerConfigurationFile($clientConfigPath, $rootPrefix);
     }
 
-    private function loadRegistryData()
+    private function loadProviders()
     {
-        $registryConfig = $this->getRegisteredConfigs('registry');
+        $registeredProviders = $this->getRegisteredConfigs('app.providers');
+        if (!is_null($registeredProviders) && is_array($registeredProviders))
+        {
+            foreach ($registeredProviders as $provider)
+            {
+                $this->loadProvider($provider);
+            }
+        }
+    }
 
-        if (is_null($registryConfig))
+    private function loadProvider($provider)
+    {
+        if (array_key_exists($provider, $this->loadedProviders))
         {
             return;
         }
 
-        foreach ($registryConfig as $key => $value)
+        $providerInstance = new $provider($this);
+
+        if (!$providerInstance instanceof ServiceProvider)
         {
-            switch ($key) {
-                case 'classes':
-                    foreach ($value as $name => $class)
-                    {
-                        $this->bind($name, $class);
-                    }
-                    break;
-                case 'singletons':
-                    foreach ($value as $name => $class)
-                    {
-                        $this->singleton($name, $class);
-                    }
-                    break;
-                case 'commands':
-                    foreach ($value as $name => $command)
-                    {
-                        $this->command($name, $command);
-                    }
-                    break;
-                case 'events':
-                    foreach ($value as $name => $event)
-                    {
-                        $this->event($name, $event);
-                    }
-                    break;
-                default:
-                    break;
-            }
+            throw new \Exception('Provider is not an instance of ' . ServiceProvider::class);
         }
+
+        $providerInstance->init();
+        $this->loadedProviders[$provider] = true;
     }
 
     private function loadRouteData()

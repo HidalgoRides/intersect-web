@@ -2,7 +2,8 @@
 
 return [
     'app' => [
-        'key' => ''
+        'key' => '',
+        'providers' => []
     ],
     'database' => [
         'connections' => [
