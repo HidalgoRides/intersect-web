@@ -1,6 +1,6 @@
 <?php
 
-namespace Intersect;
+namespace Intersect\Services;
 
 use Intersect\Application;
 

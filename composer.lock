@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/HidalgoRides/intersect-core.git",
-                "reference": "8ff893ac6d98164e3e5b2e66d4febf4c7f413109"
+                "reference": "342b5bd1e7d111832df1af7e5e64d93e0ad29a70"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HidalgoRides/intersect-core/zipball/8ff893ac6d98164e3e5b2e66d4febf4c7f413109",
-                "reference": "8ff893ac6d98164e3e5b2e66d4febf4c7f413109",
+                "url": "https://api.github.com/repos/HidalgoRides/intersect-core/zipball/342b5bd1e7d111832df1af7e5e64d93e0ad29a70",
+                "reference": "342b5bd1e7d111832df1af7e5e64d93e0ad29a70",
                 "shasum": ""
             },
             "require": {
@@ -43,7 +43,7 @@
                 }
             ],
             "description": "Common classes used throughout Intersect libraries and projects.",
-            "time": "2019-08-13T05:33:23+00:00"
+            "time": "2019-08-14T06:12:32+00:00"
         },
         {
             "name": "hidalgo-rides/intersect-database",
@@ -51,12 +51,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/HidalgoRides/intersect-database.git",
-                "reference": "e0c0a077a9a51a3004194c6059c0a7f95c7ae5a7"
+                "reference": "ee8d3235d7a59914dae7653c53fc0aa9d202e7ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HidalgoRides/intersect-database/zipball/e0c0a077a9a51a3004194c6059c0a7f95c7ae5a7",
-                "reference": "e0c0a077a9a51a3004194c6059c0a7f95c7ae5a7",
+                "url": "https://api.github.com/repos/HidalgoRides/intersect-database/zipball/ee8d3235d7a59914dae7653c53fc0aa9d202e7ac",
+                "reference": "ee8d3235d7a59914dae7653c53fc0aa9d202e7ac",
                 "shasum": ""
             },
             "require": {
@@ -82,7 +82,7 @@
                 }
             ],
             "description": "Database abstraction layer used throughout Intersect libraries and projects.",
-            "time": "2019-08-05T02:10:49+00:00"
+            "time": "2019-08-14T06:11:40+00:00"
         },
         {
             "name": "hidalgo-rides/intersect-http",

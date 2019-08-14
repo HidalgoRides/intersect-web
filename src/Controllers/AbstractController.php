@@ -1,6 +1,6 @@
 <?php
 
-namespace Intersect;
+namespace Intersect\Controllers;
 
 use Intersect\Application;
 use Intersect\Core\Http\Request;
