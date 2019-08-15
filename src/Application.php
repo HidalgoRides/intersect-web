@@ -63,8 +63,11 @@ class Application extends Container {
         }
 
         $this->loadRouteData();
-
         $this->registerConnections();
+
+        // automatically register app migration path
+        $this->migrationPath($this->getMigrationsPath());
+
         $this->loadProviders();
 
         $this->key = $applicationKey;
