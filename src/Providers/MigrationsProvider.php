@@ -12,13 +12,12 @@ class MigrationsProvider extends AppServiceProvider {
 
     public function init()
     {
-        $connection = $this->app->getConnection();
-        $migrationsPath = $this->app->getMigrationsPath();
+        $app = $this->app;
 
-        $this->app->command('migrations:export', function() use ($connection, $migrationsPath) { return new ExportMigrationsCommand($connection, $migrationsPath); });
-        $this->app->command('migrations:install', function() use ($connection) { return new InstallMigrationsCommand($connection); });
-        $this->app->command('migrations:generate', function() use ($migrationsPath) { return new GenerateMigrationCommand($migrationsPath); });
-        $this->app->command('migrations:run', function() use ($connection, $migrationsPath) { return new RunMigrationsCommand($connection, $migrationsPath); });
+        $app->command('migrations:export', function() use ($app) { return new ExportMigrationsCommand($app->getConnection(), $app->getMigrationPaths()); });
+        $app->command('migrations:install', function() use ($app) { return new InstallMigrationsCommand($app->getConnection()); });
+        $app->command('migrations:generate', function() use ($app) { return new GenerateMigrationCommand($app->getMigrationsPath()); });
+        $app->command('migrations:run', function() use ($app) { return new RunMigrationsCommand($app->getConnection(), $app->getMigrationPaths()); });
     }
 
 }
