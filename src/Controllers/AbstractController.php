@@ -44,4 +44,14 @@ abstract class AbstractController {
         $this->request = $request;
     }
 
+    /**
+     * @param $location
+     * @param $statusCode
+     */
+    protected function redirect($location, $statusCode = 302)
+    {
+        header('Location: ' . $location, true, $statusCode);
+        exit();
+    }
+
 }
