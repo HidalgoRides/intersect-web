@@ -218,24 +218,26 @@ class Application extends Container {
         $this->basePath = rtrim($basePath, '/');
     }
 
-    private function getConnectionFromConfiguration($configs)
+    private function getConnectionClosureFromConfiguration($configs)
     {
-        $host = $this->getValue('host', $configs);
-        $username = $this->getValue('username', $configs);
-        $password = $this->getValue('password', $configs);
-        $database = $this->getValue('name', $configs);
-        $port = $this->getValue('port', $configs);
-        $schema = $this->getValue('schema', $configs);
-        $charset = $this->getValue('charset', $configs, 'utf8');
-
-        $connectionSettings = ConnectionSettings::builder($host, $username, $password)
-            ->port($port)
-            ->database($database)
-            ->schema($schema)
-            ->charset($charset)
-            ->build();
-
-        return ConnectionFactory::get($configs['driver'], $connectionSettings);
+        return (function() use ($configs) {
+            $host = $this->getValue('host', $configs);
+            $username = $this->getValue('username', $configs);
+            $password = $this->getValue('password', $configs);
+            $database = $this->getValue('name', $configs);
+            $port = $this->getValue('port', $configs);
+            $schema = $this->getValue('schema', $configs);
+            $charset = $this->getValue('charset', $configs, 'utf8');
+    
+            $connectionSettings = ConnectionSettings::builder($host, $username, $password)
+                ->port($port)
+                ->database($database)
+                ->schema($schema)
+                ->charset($charset)
+                ->build();
+    
+            return ConnectionFactory::get($configs['driver'], $connectionSettings);
+        });
     }
 
     private function getValue($key, array $data, $defaultValue = null)
@@ -391,7 +393,7 @@ class Application extends Container {
 
         foreach ($connections as $key => $configData)
         {
-            ConnectionRepository::register($this->getConnectionFromConfiguration($configData), $key);
+            ConnectionRepository::register($this->getConnectionClosureFromConfiguration($configData), $key);
         }
 
         if (array_key_exists('aliases', $configs) && is_array($configs['aliases']))
