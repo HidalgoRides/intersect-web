@@ -51,12 +51,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/HidalgoRides/intersect-database.git",
-                "reference": "d6557306bfe76e77035739d3194d0b36be60647d"
+                "reference": "1ede239f5ffbf2536ecde5d9ea0763751095b423"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HidalgoRides/intersect-database/zipball/d6557306bfe76e77035739d3194d0b36be60647d",
-                "reference": "d6557306bfe76e77035739d3194d0b36be60647d",
+                "url": "https://api.github.com/repos/HidalgoRides/intersect-database/zipball/1ede239f5ffbf2536ecde5d9ea0763751095b423",
+                "reference": "1ede239f5ffbf2536ecde5d9ea0763751095b423",
                 "shasum": ""
             },
             "require": {
@@ -82,7 +82,7 @@
                 }
             ],
             "description": "Database abstraction layer used throughout Intersect libraries and projects.",
-            "time": "2019-08-24T02:55:12+00:00"
+            "time": "2019-08-24T04:23:35+00:00"
         },
         {
             "name": "hidalgo-rides/intersect-http",
