@@ -11,7 +11,7 @@ use Intersect\Database\Migrations\InstallMigrationsCommand;
 
 class MigrationsProvider extends AppServiceProvider {
 
-    public function init()
+    public function initCommands()
     {
         $app = $this->app;
 

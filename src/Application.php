@@ -199,6 +199,20 @@ class Application extends Container {
         $this->handleResponse($response, $exceptionHandler);
     }
 
+    public function loadCommands() 
+    {
+        if (!$this->isInitialized)
+        {
+            $this->init();
+        }
+        
+        foreach ($this->loadedProviders as $provider => $loaded)
+        {
+            $providerInstance = new $provider($this);
+            $providerInstance->initCommands();
+        }
+    }
+
     public function setBasePath($basePath)
     {
         $this->basePath = rtrim($basePath, '/');
