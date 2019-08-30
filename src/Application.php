@@ -2,9 +2,10 @@
 
 namespace Intersect;
 
+use Intersect\Controllers\AbstractController;
+use Intersect\Core\Event;
 use Intersect\Core\Command\Command;
 use Intersect\Core\Container;
-use Intersect\Core\Event;
 use Intersect\Core\Http\Request;
 use Intersect\Core\Providers\ServiceProvider;
 use Intersect\Core\Storage\FileStorage;
@@ -12,6 +13,8 @@ use Intersect\Http\Router\Route;
 use Intersect\Http\RequestHandler;
 use Intersect\Http\ExceptionHandler;
 use Intersect\Http\Response\Response;
+use Intersect\Http\Response\TwigResponse;
+use Intersect\Http\Response\ViewResponse;
 use Intersect\Http\Router\RouteGroup;
 use Intersect\Http\Router\RouteRegistry;
 use Intersect\Database\Connection\Connection;
@@ -19,8 +22,6 @@ use Intersect\Database\Connection\NullConnection;
 use Intersect\Database\Connection\ConnectionFactory;
 use Intersect\Database\Connection\ConnectionSettings;
 use Intersect\Database\Connection\ConnectionRepository;
-use Intersect\Http\Response\ViewResponse;
-use Intersect\Http\Response\TwigResponse;
 
 class Application extends Container {
 
