@@ -176,7 +176,7 @@ class Application extends Container {
 
         /** @var ExceptionHandler $exceptionHandler */
         $exceptionHandler = $this->getClass(ExceptionHandler::class);
-        $requestHandler = new RequestHandler($this, $this->routeRegistry, $exceptionHandler);
+        $requestHandler = new RequestHandler($this, $exceptionHandler);
 
         $requestHandler->setPreInvocationCallback(function($controller) use ($request) {
             if ($controller instanceof AbstractController)

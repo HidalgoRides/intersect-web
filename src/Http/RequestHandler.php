@@ -7,7 +7,6 @@ use Intersect\Core\Http\Request;
 use Intersect\Core\MethodInvoker;
 use Intersect\Core\ClosureInvoker;
 use Intersect\Core\ParameterResolver;
-use Intersect\Core\Http\Router\RouteRegistry;
 use Intersect\Core\Http\Router\RouteResolver;
 use Intersect\Http\ExceptionHandler;
 use Intersect\Http\Response\Response;
