@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0c12f82905b531524d64f659e115ec69",
+    "content-hash": "4979e9755bec24768ab93403ec3f2f44",
     "packages": [
         {
             "name": "hidalgo-rides/intersect-core",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/HidalgoRides/intersect-core.git",
-                "reference": "c90874639d3f41f05b84f4151dde78ad6a640ec6"
+                "reference": "0a9bc3c49a0e4a940297292517a1db75a3149113"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HidalgoRides/intersect-core/zipball/c90874639d3f41f05b84f4151dde78ad6a640ec6",
-                "reference": "c90874639d3f41f05b84f4151dde78ad6a640ec6",
+                "url": "https://api.github.com/repos/HidalgoRides/intersect-core/zipball/0a9bc3c49a0e4a940297292517a1db75a3149113",
+                "reference": "0a9bc3c49a0e4a940297292517a1db75a3149113",
                 "shasum": ""
             },
             "require": {
@@ -43,7 +43,7 @@
                 }
             ],
             "description": "Common classes used throughout Intersect libraries and projects.",
-            "time": "2019-08-24T20:25:21+00:00"
+            "time": "2019-08-31T02:05:57+00:00"
         },
         {
             "name": "hidalgo-rides/intersect-database",
@@ -83,47 +83,6 @@
             ],
             "description": "Database abstraction layer used throughout Intersect libraries and projects.",
             "time": "2019-08-25T02:31:51+00:00"
-        },
-        {
-            "name": "hidalgo-rides/intersect-http",
-            "version": "1.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/HidalgoRides/intersect-http.git",
-                "reference": "7e3c8fb06800512582b766b33e384e8854148297"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/HidalgoRides/intersect-http/zipball/7e3c8fb06800512582b766b33e384e8854148297",
-                "reference": "7e3c8fb06800512582b766b33e384e8854148297",
-                "shasum": ""
-            },
-            "require": {
-                "hidalgo-rides/intersect-core": "1.2.*",
-                "timkippdev/array-to-xml-converter": "1.0.*"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^7",
-                "twig/twig": "^2.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Intersect\\Http\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Tim Kipp",
-                    "email": "timkipp.22.developer@gmail.com"
-                }
-            ],
-            "description": "Handles HTTP request and routing for Intersect projects.",
-            "time": "2019-08-25T02:33:38+00:00"
         },
         {
             "name": "timkippdev/array-to-xml-converter",
@@ -314,18 +273,18 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "email": "arne@blankerts.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "arne@blankerts.de"
                 },
                 {
                     "name": "Sebastian Heuer",
-                    "email": "sebastian@phpeople.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "sebastian@phpeople.de"
                 },
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Component for reading phar.io manifest information from a PHP Archive (PHAR)",
@@ -643,8 +602,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
@@ -694,8 +653,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "FilterIterator implementation that filters files based on a list of suffixes.",
@@ -736,8 +695,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Simple template engine.",
@@ -785,8 +744,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Utility class for timing",
@@ -1487,8 +1446,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
@@ -1645,8 +1604,8 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "email": "arne@blankerts.de",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "email": "arne@blankerts.de"
                 }
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
@@ -1697,19 +1656,19 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
+                    "role": "Lead Developer",
                     "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
+                    "homepage": "http://fabien.potencier.org"
                 },
                 {
                     "name": "Armin Ronacher",
-                    "email": "armin.ronacher@active-4.com",
-                    "role": "Project Founder"
+                    "role": "Project Founder",
+                    "email": "armin.ronacher@active-4.com"
                 },
                 {
                     "name": "Twig Team",
-                    "homepage": "https://twig.symfony.com/contributors",
-                    "role": "Contributors"
+                    "role": "Contributors",
+                    "homepage": "https://twig.symfony.com/contributors"
                 }
             ],
             "description": "Twig, the flexible, fast, and secure template language for PHP",

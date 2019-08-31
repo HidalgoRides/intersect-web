@@ -9,14 +9,13 @@ use Intersect\Core\Container;
 use Intersect\Core\Http\Request;
 use Intersect\Core\Providers\ServiceProvider;
 use Intersect\Core\Storage\FileStorage;
-use Intersect\Http\Router\Route;
+use Intersect\Core\Http\Router\Route;
+use Intersect\Core\Http\Router\RouteGroup;
 use Intersect\Http\RequestHandler;
 use Intersect\Http\ExceptionHandler;
 use Intersect\Http\Response\Response;
 use Intersect\Http\Response\TwigResponse;
 use Intersect\Http\Response\ViewResponse;
-use Intersect\Http\Router\RouteGroup;
-use Intersect\Http\Router\RouteRegistry;
 use Intersect\Database\Connection\Connection;
 use Intersect\Database\Connection\NullConnection;
 use Intersect\Database\Connection\ConnectionFactory;
@@ -36,13 +35,9 @@ class Application extends Container {
     private $key;
     private $loadedProviders = [];
 
-    /** @var RouteRegistry */
-    private $routeRegistry;
-
     public function __construct()
     {
         parent::__construct();
-        $this->routeRegistry = new RouteRegistry();
         self::$INSTANCE = $this;
     }
 
@@ -53,8 +48,8 @@ class Application extends Container {
             return;
         }
 
-        $this->loadConfiguration('base-config.php', 'config.php');
-        $this->loadConfiguration('base-routes.php', 'routes.php', 'routes');
+        $this->loadConfiguration('config.php');
+        $this->loadConfiguration('routes.php', 'routes');
 
         $applicationKey = $this->getRegisteredConfigs('app.key');
         
@@ -118,6 +113,11 @@ class Application extends Container {
         }
     }
 
+    public function getKey()
+    {
+        return $this->key;
+    }
+
     /**
      * @param $class
      * @param array $namedParameters
@@ -162,16 +162,6 @@ class Application extends Container {
     public function getMigrationsPath()
     {
         return $this->getBasePath() . $this->getRegisteredConfigs('paths.migrations');
-    }
-
-    public function getRegisteredRoutes($method = null, $path = null)
-    {
-        if (is_null($method))
-        {
-            return $this->routeRegistry->getAll();
-        }
-
-        return $this->routeRegistry->get($method, $path);
     }
 
     public function getTemplatesPath()
@@ -292,13 +282,8 @@ class Application extends Container {
         }
     }
 
-    private function loadConfiguration($baseFileName, $clientFileName, $rootPrefix = null)
+    private function loadConfiguration($clientFileName, $rootPrefix = null)
     {
-        // load base application configurations
-        $baseConfigPath = __DIR__ . '/../configs/' . $baseFileName;
-        $this->registerConfigurationFile($baseConfigPath, $rootPrefix);
-
-        // load client application configurations
         $clientConfigPath = $this->getConfigsPath() . '/' . $clientFileName;
         $this->registerConfigurationFile($clientConfigPath, $rootPrefix);
     }
@@ -346,11 +331,11 @@ class Application extends Container {
         {
             if ($route instanceof Route)
             {
-                $this->registerRoute($route);
+                $this->route($route);
             }
             else if ($route instanceof RouteGroup)
             {
-                $this->registerRouteGroup($route);
+                $this->routeGroup($route);
             }
         }
     }
@@ -406,22 +391,6 @@ class Application extends Container {
                 ConnectionRepository::registerAlias($alias, $key);
             }
         }
-    }
-
-    /**
-     * @param Route $route
-     */
-    private function registerRoute(Route $route)
-    {
-        $this->routeRegistry->registerRoute($route);
-    }
-
-    /**
-     * @param RouteGroup $routeGroup
-     */
-    private function registerRouteGroup(RouteGroup $routeGroup)
-    {
-        $this->routeRegistry->registerRouteGroup($routeGroup);
     }
 
 }
