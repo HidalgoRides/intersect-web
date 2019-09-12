@@ -18,6 +18,10 @@ class DefaultProvider extends AppServiceProvider {
         $this->app->route(Route::get('/_version', function() {
             return new JsonResponse(ComposerUtils::getVersions());
         }));
+
+        $this->app->route(Route::get('/_health-check', function() {
+            return new JsonResponse(['status' => 'passed']);
+        }));
     }
 
 }

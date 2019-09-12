@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "hidalgo-rides/intersect-core",
-            "version": "1.2.1",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/HidalgoRides/intersect-core.git",
-                "reference": "0a9bc3c49a0e4a940297292517a1db75a3149113"
+                "reference": "813380a430d48beddfc5445e3f6422daf56a2933"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HidalgoRides/intersect-core/zipball/0a9bc3c49a0e4a940297292517a1db75a3149113",
-                "reference": "0a9bc3c49a0e4a940297292517a1db75a3149113",
+                "url": "https://api.github.com/repos/HidalgoRides/intersect-core/zipball/813380a430d48beddfc5445e3f6422daf56a2933",
+                "reference": "813380a430d48beddfc5445e3f6422daf56a2933",
                 "shasum": ""
             },
             "require": {
@@ -43,20 +43,20 @@
                 }
             ],
             "description": "Common classes used throughout Intersect libraries and projects.",
-            "time": "2019-08-31T02:05:57+00:00"
+            "time": "2019-08-31T04:37:35+00:00"
         },
         {
             "name": "hidalgo-rides/intersect-database",
-            "version": "1.2.0",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/HidalgoRides/intersect-database.git",
-                "reference": "576d3f90b50ae73099c6c6422210354121ff748a"
+                "reference": "dcef55fcca16300e8edd5f18b017a7ea28253b35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HidalgoRides/intersect-database/zipball/576d3f90b50ae73099c6c6422210354121ff748a",
-                "reference": "576d3f90b50ae73099c6c6422210354121ff748a",
+                "url": "https://api.github.com/repos/HidalgoRides/intersect-database/zipball/dcef55fcca16300e8edd5f18b017a7ea28253b35",
+                "reference": "dcef55fcca16300e8edd5f18b017a7ea28253b35",
                 "shasum": ""
             },
             "require": {
@@ -82,7 +82,7 @@
                 }
             ],
             "description": "Database abstraction layer used throughout Intersect libraries and projects.",
-            "time": "2019-08-25T02:31:51+00:00"
+            "time": "2019-09-12T04:33:29+00:00"
         },
         {
             "name": "timkippdev/array-to-xml-converter",
