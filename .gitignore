@@ -5,7 +5,7 @@ vendor/
 logs/
 tests/coverage-results
 cache/
-templates/
+./templates/
 configs/config.php
 configs/registry.php
 configs/routes.php
