@@ -6,6 +6,8 @@ logs/
 tests/coverage-results
 cache/
 ./templates/
-configs/config.php
-configs/registry.php
-configs/routes.php
+configs/
+public/
+docker-compose.yml
+Dockerfile
+.docker/

@@ -21,7 +21,7 @@
     }
   },
   "require": {
-    "hidalgo-rides/intersect-database": "1.2.*",
+    "hidalgo-rides/intersect-database": "dev-release/1.3.x",
     "timkippdev/array-to-xml-converter": "1.0.*"
   },
   "require-dev": {
