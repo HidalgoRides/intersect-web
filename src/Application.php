@@ -2,25 +2,27 @@
 
 namespace Intersect;
 
-use Intersect\Controllers\AbstractController;
 use Intersect\Core\Event;
-use Intersect\Core\Command\Command;
 use Intersect\Core\Container;
 use Intersect\Core\Http\Request;
-use Intersect\Core\Providers\ServiceProvider;
-use Intersect\Core\Storage\FileStorage;
-use Intersect\Core\Http\Router\Route;
-use Intersect\Core\Http\Router\RouteGroup;
 use Intersect\Http\RequestHandler;
+use Intersect\Core\Command\Command;
 use Intersect\Http\ExceptionHandler;
+use Intersect\Core\Http\Router\Route;
 use Intersect\Http\Response\Response;
+use Intersect\Core\Storage\FileStorage;
 use Intersect\Http\Response\TwigResponse;
 use Intersect\Http\Response\ViewResponse;
+use Intersect\Middleware\MiddlewareStack;
+use Intersect\Core\Http\Router\RouteGroup;
+use Intersect\Controllers\AbstractController;
+use Intersect\Core\Providers\ServiceProvider;
 use Intersect\Database\Connection\Connection;
 use Intersect\Database\Connection\NullConnection;
 use Intersect\Database\Connection\ConnectionFactory;
 use Intersect\Database\Connection\ConnectionSettings;
 use Intersect\Database\Connection\ConnectionRepository;
+use Intersect\Middleware\Middleware;
 
 class Application extends Container {
 
@@ -34,11 +36,20 @@ class Application extends Container {
     private $isInitialized = false;
     private $key;
     private $loadedProviders = [];
+    /** @var MiddlewareStack */
+    private $middlewareStack;
 
     public function __construct()
     {
         parent::__construct();
         self::$INSTANCE = $this;
+
+        $this->middlewareStack = new MiddlewareStack();
+    }
+
+    public function addMiddleware(Middleware $middleware)
+    {
+        $this->middlewareStack->add($middleware);
     }
 
     public function init()
@@ -186,7 +197,8 @@ class Application extends Container {
             }
         });
 
-        $response = $requestHandler->handle($request);
+        $response = $requestHandler->handle($request, $this->middlewareStack);
+
         $this->handleResponse($response, $exceptionHandler);
     }
 

@@ -11,6 +11,8 @@ use Intersect\Core\Http\Router\RouteResolver;
 use Intersect\Http\ExceptionHandler;
 use Intersect\Http\Response\Response;
 use Intersect\Http\Response\StandardResponse;
+use Intersect\Middleware\Middleware;
+use Intersect\Middleware\MiddlewareStack;
 
 class RequestHandler {
 
@@ -56,7 +58,7 @@ class RequestHandler {
      * @return Response
      * @throws \Exception
      */
-    public function handle(Request $request)
+    public function handle(Request $request, MiddlewareStack $middlewareStack)
     {
         $response = null;
 
@@ -66,6 +68,32 @@ class RequestHandler {
             if (is_null($routeAction))
             {
                 throw new \Exception('Route not found: [uri: ' . $request->getBaseUri() . ']');
+            }
+
+            $extraOptions = $routeAction->getExtraOptions();
+
+            $middlewares = (array_key_exists('middleware', $extraOptions) && is_array($extraOptions['middleware']) ? $routeAction->getExtraOptions()['middleware'] : []);
+            
+            foreach ($middlewares as $middleware)
+            {
+                $middlewareClass = new $middleware();
+                
+                if ($middlewareClass instanceof Middleware)
+                {
+                    $middlewareStack->add($middlewareClass);
+                }
+            }
+
+            $middlewareResponse = $middlewareStack->execute($request);
+
+            if (!is_null($middlewareResponse))
+            {
+                if (!$middlewareResponse instanceof Response)
+                {
+                    $middlewareResponse = new StandardResponse($middlewareResponse);
+                }
+
+                return $middlewareResponse;
             }
 
             if ($routeAction->getIsCallable())
