@@ -22,6 +22,7 @@ use Intersect\Database\Connection\NullConnection;
 use Intersect\Database\Connection\ConnectionFactory;
 use Intersect\Database\Connection\ConnectionSettings;
 use Intersect\Database\Connection\ConnectionRepository;
+use Intersect\Http\Response\RedirectResponse;
 use Intersect\Middleware\Middleware;
 
 class Application extends Container {
@@ -280,6 +281,32 @@ class Application extends Container {
             }
             else
             {
+                if ($response instanceof RedirectResponse)
+                {
+                    $location = $response->getLocation();
+                    $routeFromName = $this->getRouteRegistry()->getByName($location);
+
+                    if (!is_null($routeFromName))
+                    {
+                        $path = $routeFromName->getPath();
+                        
+                        // replace dynamic url placeholder values
+                        if (preg_match_all('#:([a-z0-9]+)/?#i', $path, $placeholders))
+                        {
+                            $data = $response->getData();
+                            foreach ($placeholders[1] as $placeholder)
+                            {
+                                if (array_key_exists($placeholder, $data))
+                                {
+                                    $path = str_replace(':' . $placeholder, $data[$placeholder], $path);
+                                }
+                            }
+                        }
+                        
+                        $response->setLocation($path);
+                    }
+                }
+
                 $response->handle();
             }
         } catch (\Exception $e) {

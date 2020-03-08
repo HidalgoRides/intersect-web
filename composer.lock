@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/HidalgoRides/intersect-core.git",
-                "reference": "ce6514dc277239d42175902201ae70c39149c77c"
+                "reference": "2e84762c71e0d3eadf6f93ce57ad82bc0f5fa97f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HidalgoRides/intersect-core/zipball/ce6514dc277239d42175902201ae70c39149c77c",
-                "reference": "ce6514dc277239d42175902201ae70c39149c77c",
+                "url": "https://api.github.com/repos/HidalgoRides/intersect-core/zipball/2e84762c71e0d3eadf6f93ce57ad82bc0f5fa97f",
+                "reference": "2e84762c71e0d3eadf6f93ce57ad82bc0f5fa97f",
                 "shasum": ""
             },
             "require": {
@@ -43,7 +43,7 @@
                 }
             ],
             "description": "Common classes used throughout Intersect libraries and projects.",
-            "time": "2020-02-07T22:17:10+00:00"
+            "time": "2020-03-08T19:53:33+00:00"
         },
         {
             "name": "hidalgo-rides/intersect-database",
@@ -51,12 +51,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/HidalgoRides/intersect-database.git",
-                "reference": "5e6b5805f0ab71793c444000b2cfac2fa9bf6512"
+                "reference": "9c41f96b217e80eb0a71ad28d0b1a0f0754a7c14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HidalgoRides/intersect-database/zipball/5e6b5805f0ab71793c444000b2cfac2fa9bf6512",
-                "reference": "5e6b5805f0ab71793c444000b2cfac2fa9bf6512",
+                "url": "https://api.github.com/repos/HidalgoRides/intersect-database/zipball/9c41f96b217e80eb0a71ad28d0b1a0f0754a7c14",
+                "reference": "9c41f96b217e80eb0a71ad28d0b1a0f0754a7c14",
                 "shasum": ""
             },
             "require": {
@@ -82,7 +82,7 @@
                 }
             ],
             "description": "Database abstraction layer used throughout Intersect libraries and projects.",
-            "time": "2020-02-11T05:23:42+00:00"
+            "time": "2020-03-03T07:02:38+00:00"
         },
         {
             "name": "timkippdev/array-to-xml-converter",
@@ -490,16 +490,16 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "v1.10.2",
+            "version": "v1.10.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "b4400efc9d206e83138e2bb97ed7f5b14b831cd9"
+                "reference": "451c3cd1418cf640de218914901e51b064abb093"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/b4400efc9d206e83138e2bb97ed7f5b14b831cd9",
-                "reference": "b4400efc9d206e83138e2bb97ed7f5b14b831cd9",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/451c3cd1418cf640de218914901e51b064abb093",
+                "reference": "451c3cd1418cf640de218914901e51b064abb093",
                 "shasum": ""
             },
             "require": {
@@ -549,7 +549,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2020-01-20T15:57:02+00:00"
+            "time": "2020-03-05T15:02:03+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
