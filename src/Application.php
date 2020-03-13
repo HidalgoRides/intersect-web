@@ -67,7 +67,7 @@ class Application extends Container {
         
         if (is_null($applicationKey) || trim($applicationKey == ''))
         {
-            throw new \Exception('Application key not set! Please add the required configuration for "app.key"');
+            throw new \Exception('Application key not set! Please add the required configuration for "app.key", or run the following command: "php intersect app:generate-key"');
         }
 
         $this->loadRouteData();

@@ -2,6 +2,7 @@
 
 namespace Intersect\Providers;
 
+use Intersect\Commands\GenerateApplicationKeyCommand;
 use Intersect\Utils\ComposerUtils;
 use Intersect\Http\ExceptionHandler;
 use Intersect\Core\Http\Router\Route;
@@ -22,6 +23,11 @@ class DefaultProvider extends AppServiceProvider {
         $this->app->route(Route::get('/_health-check', function() {
             return new JsonResponse(['status' => 'passed']);
         }));
+    }
+
+    public function initCommands()
+    {
+        $this->app->command('app:generate-key', function() { return new GenerateApplicationKeyCommand(); });
     }
 
 }

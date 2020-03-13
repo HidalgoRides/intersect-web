@@ -51,12 +51,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/HidalgoRides/intersect-database.git",
-                "reference": "9c41f96b217e80eb0a71ad28d0b1a0f0754a7c14"
+                "reference": "91b306dfd51b52c2728de65aa0cb430240f16c30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HidalgoRides/intersect-database/zipball/9c41f96b217e80eb0a71ad28d0b1a0f0754a7c14",
-                "reference": "9c41f96b217e80eb0a71ad28d0b1a0f0754a7c14",
+                "url": "https://api.github.com/repos/HidalgoRides/intersect-database/zipball/91b306dfd51b52c2728de65aa0cb430240f16c30",
+                "reference": "91b306dfd51b52c2728de65aa0cb430240f16c30",
                 "shasum": ""
             },
             "require": {
@@ -82,7 +82,7 @@
                 }
             ],
             "description": "Database abstraction layer used throughout Intersect libraries and projects.",
-            "time": "2020-03-03T07:02:38+00:00"
+            "time": "2020-03-12T03:34:45+00:00"
         },
         {
             "name": "timkippdev/array-to-xml-converter",
