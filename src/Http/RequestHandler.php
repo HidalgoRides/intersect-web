@@ -100,7 +100,7 @@ class RequestHandler {
             {
                 $response = $this->closureInvoker->invoke($routeAction->getMethod(), $routeAction->getNamedParameters());
             }
-            else
+            else if (!is_null($routeAction->getController()) && !is_null($routeAction->getMethod()))
             {
                 $controllerClass = $routeAction->getController();
 

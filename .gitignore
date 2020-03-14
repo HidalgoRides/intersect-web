@@ -11,3 +11,4 @@ public/
 docker-compose.yml
 Dockerfile
 .docker/
+intersect

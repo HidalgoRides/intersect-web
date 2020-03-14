@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/HidalgoRides/intersect-core.git",
-                "reference": "2e84762c71e0d3eadf6f93ce57ad82bc0f5fa97f"
+                "reference": "6dfccc7478b6b4041f345fd3f0f6c660cd2afdd1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/HidalgoRides/intersect-core/zipball/2e84762c71e0d3eadf6f93ce57ad82bc0f5fa97f",
-                "reference": "2e84762c71e0d3eadf6f93ce57ad82bc0f5fa97f",
+                "url": "https://api.github.com/repos/HidalgoRides/intersect-core/zipball/6dfccc7478b6b4041f345fd3f0f6c660cd2afdd1",
+                "reference": "6dfccc7478b6b4041f345fd3f0f6c660cd2afdd1",
                 "shasum": ""
             },
             "require": {
@@ -43,7 +43,7 @@
                 }
             ],
             "description": "Common classes used throughout Intersect libraries and projects.",
-            "time": "2020-03-08T19:53:33+00:00"
+            "time": "2020-03-14T21:07:30+00:00"
         },
         {
             "name": "hidalgo-rides/intersect-database",
