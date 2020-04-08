@@ -60,7 +60,14 @@ class GenerateRouteCacheCommand implements Command {
             }
         }
 
-        $filePath = $this->app->getCachePath() . '/routes.php';
+        $cachePath = $this->app->getCachePath();
+
+        if (!$this->fileStorage->directoryExists($cachePath))
+        {
+            $this->fileStorage->writeDirectory($cachePath);
+        }
+
+        $filePath = $cachePath . '/routes.php';
         $this->fileStorage->writeFile($filePath, json_encode($routeCacheData));
         
         $this->logger->info('Route cache generated at ' . $filePath);
