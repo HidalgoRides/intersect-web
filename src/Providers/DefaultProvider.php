@@ -23,7 +23,7 @@ class DefaultProvider extends AppServiceProvider {
     public function initCommands()
     {
         $this->app->command('app:generate-key', function() { return new GenerateApplicationKeyCommand(); });
-        $this->app->command('app:generate-route-cache', function() { return new GenerateRouteCacheCommand(); });
+        // $this->app->command('app:generate-route-cache', function() { return new GenerateRouteCacheCommand(); });
     }
 
 }
