@@ -7,7 +7,7 @@ class RedirectResponse extends AbstractResponse {
     private $data;
     private $location;
 
-    public function __construct($location, array $data = [], $status = 301)
+    public function __construct($location, array $data = [], $status = 302)
     {
         parent::__construct(null, $status);
         $this->data = $data;
