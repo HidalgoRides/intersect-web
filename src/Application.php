@@ -117,7 +117,7 @@ class Application extends Container {
     public function fireEvent($eventKey, $data = [])
     {
         /** @var Event $event */
-        $event = $this->eventRegistry->get($eventKey);
+        $event = $this->getEventRegistry()->get($eventKey);
 
         if (!is_null($event))
         {
