@@ -121,6 +121,11 @@ class Application extends Container {
 
         if (!is_null($event))
         {
+            if (is_string($event))
+            {
+                $event = new $event();
+            }
+            
             $event->handle($data);
         }
     }
